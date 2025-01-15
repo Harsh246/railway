@@ -16,7 +16,7 @@ const generateMockDetails = () => ({
   }).map(() => ({
     orderId: faker.string.uuid(),
     orderDate: faker.date.past().toISOString(),
-    orderStatus: faker.helpers.arrayElement(['Delivered', 'Pending', 'Canceled']),
+    orderStatus: faker.helpers.arrayElement(['Delivered', 'Not Delivered']),
     items: Array.from({
       length: faker.number.int({ min: 1, max: 10 })
     }).map(() => ({
@@ -29,14 +29,19 @@ const generateMockDetails = () => ({
   lastComplaint: faker.lorem.sentence(),
   loyaltyPoints: faker.number.int({ min: 0, max: 1000 }),
   tags: faker.helpers.arrayElements(['High Priority', 'VIP Customer', 'Frequent Returns'], 2),
+  lastContacted: faker.helpers.arrayElement([
+    faker.date.recent({ days: 1 }).toISOString(), // Within the last 24 hours
+    faker.date.past().toISOString(), // An earlier random date
+  ]),
 });
+
 // Endpoint to fetch customer details
 router.get('/api/customer-details', (req, res) => {
-  const { orderId, mobileNumber } = req.query;
+  const { caseId } = req.query;
 
   // Validate input
-  if (!orderId && !mobileNumber) {
-    return res.status(400).json({ error: 'Please provide either an orderId or a mobileNumber.' });
+  if (!caseId) {
+    return res.status(400).json({ error: 'Please provide a caseId.' });
   }
 
   // Generate mock details dynamically
@@ -44,11 +49,9 @@ router.get('/api/customer-details', (req, res) => {
 
   // Add specific identifier to make it clear which query fetched the data
   if (mobileNumber) {
-    customerDetails.mobileNumber = mobileNumber;
+    customerDetails.caseId = caseId;
   }
-  if (orderId) {
-    customerDetails.orders[0].orderId = orderId; // Attach the orderId to one of the mock orders
-  }
+
 
   // Respond with the generated details
   res.json(customerDetails);
