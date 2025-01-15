@@ -48,9 +48,7 @@ router.get('/api/customer-details', (req, res) => {
   const customerDetails = generateMockDetails();
 
   // Add specific identifier to make it clear which query fetched the data
-  if (mobileNumber) {
-    customerDetails.caseId = caseId;
-  }
+  customerDetails.caseId = caseId;
 
 
   // Respond with the generated details
