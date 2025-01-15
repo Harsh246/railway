@@ -1,31 +1,35 @@
 const express = require('express');
 const { faker } = require('@faker-js/faker');
+const path = require('path');
 const router = express.Router();
 
 // Helper function to generate mock customer and order details
 const generateMockDetails = () => ({
-  customerId: faker.datatype.uuid(),
-  customerName: faker.name.fullName(),
+  customerId: faker.string.uuid(),
+  customerName: faker.person.fullName(),
   mobileNumber: faker.phone.number('+91 ##########'),
   email: faker.internet.email(),
-  deliveryAddress: faker.address.streetAddress() + ', ' + faker.address.city() + ', ' + faker.address.country(),
-  accountCreatedDate: faker.date.past(5).toISOString(),
-  orders: Array.from({ length: faker.datatype.number({ min: 1, max: 5 }) }).map(() => ({
-    orderId: faker.datatype.uuid(),
+  deliveryAddress: `${faker.location.streetAddress()}, ${faker.location.city()}, ${faker.location.country()}`,
+  accountCreatedDate: faker.date.past({ years: 5 }).toISOString(),
+  orders: Array.from({
+    length: faker.number.int({ min: 1, max: 5 })
+  }).map(() => ({
+    orderId: faker.string.uuid(),
     orderDate: faker.date.past().toISOString(),
     orderStatus: faker.helpers.arrayElement(['Delivered', 'Pending', 'Canceled']),
-    items: Array.from({ length: faker.datatype.number({ min: 1, max: 10 }) }).map(() => ({
+    items: Array.from({
+      length: faker.number.int({ min: 1, max: 10 })
+    }).map(() => ({
       itemName: faker.commerce.productName(),
-      quantity: faker.datatype.number({ min: 1, max: 5 }),
+      quantity: faker.number.int({ min: 1, max: 5 }),
       price: faker.commerce.price(),
     })),
     totalAmount: faker.commerce.price(),
   })),
   lastComplaint: faker.lorem.sentence(),
-  loyaltyPoints: faker.datatype.number({ min: 0, max: 1000 }),
+  loyaltyPoints: faker.number.int({ min: 0, max: 1000 }),
   tags: faker.helpers.arrayElements(['High Priority', 'VIP Customer', 'Frequent Returns'], 2),
 });
-
 // Endpoint to fetch customer details
 router.get('/api/customer-details', (req, res) => {
   const { orderId, mobileNumber } = req.query;
