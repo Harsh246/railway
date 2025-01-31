@@ -178,8 +178,8 @@ router.get('/api/ooredoo/customer-details', (req, res) => {
 });
 
 // Endpoint to fetch full account holder details
-router.get('/api/techm/customer', (req, res) => {
-  const { mobileNumber } = req.query;
+router.get('/api/techm/customer/:mobileNumber', (req, res) => {
+  const { mobileNumber } = req.params;
 
   // Validate input
   if (!mobileNumber) {
@@ -192,6 +192,9 @@ router.get('/api/techm/customer', (req, res) => {
     address: `${faker.location.streetAddress()}, ${faker.location.city()}, ${faker.location.state()}, ${faker.location.country()}, ${faker.location.zipCode()}`,
     mobileNumber,
     dateOfBirth: faker.date.birthdate({ min: 18, max: 80, mode: 'age' }).toISOString().split('T')[0], // Format: YYYY-MM-DD
+    lastBillingAmount: `$${faker.finance.amount(10, 500, 2)}`, // Random billing amount
+    lastPaymentMethod: faker.helpers.arrayElement(['Credit Card', 'Debit Card', 'Net Banking', 'UPI', 'Wallet']), // Random payment method
+
   };
 
   res.json(customerDetails);
