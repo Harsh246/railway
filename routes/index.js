@@ -177,6 +177,27 @@ router.get('/api/ooredoo/customer-details', (req, res) => {
   res.json(response);
 });
 
+// Endpoint to fetch full account holder details
+router.get('/api/techm/customer/:mobileNumber', (req, res) => {
+  const { mobileNumber } = req.params;
+
+  // Validate input
+  if (!mobileNumber) {
+    return res.status(400).json({ error: 'Mobile number is required.' });
+  }
+
+  // Generate mock details
+  const customerDetails = {
+    fullName: faker.person.fullName(),
+    address: `${faker.location.streetAddress()}, ${faker.location.city()}, ${faker.location.state()}, ${faker.location.country()}, ${faker.location.zipCode()}`,
+    mobileNumber,
+    dateOfBirth: faker.date.birthdate({ min: 18, max: 80, mode: 'age' }).toISOString().split('T')[0], // Format: YYYY-MM-DD
+  };
+
+  res.json(customerDetails);
+});
+
+
 // Serve the index.html file for the root route
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/index.html'));
