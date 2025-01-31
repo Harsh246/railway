@@ -178,8 +178,8 @@ router.get('/api/ooredoo/customer-details', (req, res) => {
 });
 
 // Endpoint to fetch full account holder details
-router.get('/api/techm/customer/:mobileNumber', (req, res) => {
-  const { mobileNumber } = req.params;
+router.get('/api/techm/customer', (req, res) => {
+  const { mobileNumber } = req.query;
 
   // Validate input
   if (!mobileNumber) {
