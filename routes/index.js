@@ -190,7 +190,7 @@ router.get('/api/techm/customer/:mobileNumber', (req, res) => {
   // Generate mock details
   const customerDetails = {
     fullName: faker.person.fullName(),
-    address: `${faker.location.streetAddress()}, ${faker.location.city()}, ${faker.location.state()}, ${faker.location.country()}, ${faker.location.zipCode()}`,
+    address: `${faker.address.streetAddress()}, ${faker.address.city()}, ${faker.address.county()}, ${faker.address.postcode()}, ${faker.address.country()}`,
     mobileNumber,
     dateOfBirth: faker.date.birthdate({ min: 18, max: 80, mode: 'age' }).toISOString().split('T')[0], // Format: YYYY-MM-DD
     lastBillingAmount: `$${faker.finance.amount(10, 500, 2)}`, // Random billing amount
