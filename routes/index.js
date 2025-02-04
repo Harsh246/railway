@@ -187,7 +187,6 @@ router.get('/api/techm/customer/:mobileNumber', (req, res) => {
   }
 
   try {
-    faker.setLocale('en_GB')
 
     // Generate mock details
     const customerDetails = {
