@@ -185,12 +185,12 @@ router.get('/api/techm/customer/:mobileNumber', (req, res) => {
   if (!mobileNumber) {
     return res.status(400).json({ error: 'Mobile number is required.' });
   }
-  faker.locale = 'en_GB';
+  faker.setLocale('en_GB');
 
   // Generate mock details
   const customerDetails = {
     fullName: faker.person.fullName(),
-    address: `${faker.address.streetAddress()}, ${faker.address.city()}, ${faker.address.county()}, ${faker.address.postcode()}, ${faker.address.country()}`,
+    address: `${faker.location.buildingNumber()} ${faker.location.street()}, ${faker.location.city()}, ${faker.location.county()}, United Kingdom, ${faker.location.postcode()}`,
     mobileNumber,
     dateOfBirth: faker.date.birthdate({ min: 18, max: 80, mode: 'age' }).toISOString().split('T')[0], // Format: YYYY-MM-DD
     lastBillingAmount: `$${faker.finance.amount(10, 500, 2)}`, // Random billing amount
