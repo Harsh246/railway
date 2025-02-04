@@ -185,6 +185,7 @@ router.get('/api/techm/customer/:mobileNumber', (req, res) => {
   if (!mobileNumber) {
     return res.status(400).json({ error: 'Mobile number is required.' });
   }
+  faker.locale = 'en_GB';
 
   // Generate mock details
   const customerDetails = {
