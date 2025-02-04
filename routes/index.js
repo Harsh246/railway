@@ -185,21 +185,27 @@ router.get('/api/techm/customer/:mobileNumber', (req, res) => {
   if (!mobileNumber) {
     return res.status(400).json({ error: 'Mobile number is required.' });
   }
-  faker.setLocale('en_GB')
+
+  try {
+    faker.setLocale('en_GB')
+
+    // Generate mock details
+    const customerDetails = {
+      fullName: faker.person.fullName(),
+      address: `${fakerEN_GB.location.buildingNumber()} ${fakerEN_GB.location.street()}, ${fakerEN_GB.location.city()}, ${fakerEN_GB.location.county()}, United Kingdom, ${fakerEN_GB.location.zipCode()}`,
+      mobileNumber,
+      dateOfBirth: faker.date.birthdate({ min: 18, max: 80, mode: 'age' }).toISOString().split('T')[0], // Format: YYYY-MM-DD
+      lastBillingAmount: `$${faker.finance.amount(10, 500, 2)}`, // Random billing amount
+      lastPaymentMethod: faker.helpers.arrayElement(['Credit Card', 'Debit Card', 'Net Banking', 'EMI', 'Wallet']), // Random payment method
+
+    };
+
+    res.json(customerDetails);
+  } catch (err) {
+    console.debug("🚀 ~ router.get ~ err:", err)
+  }
 
 
-  // Generate mock details
-  const customerDetails = {
-    fullName: faker.person.fullName(),
-    address: `${fakerEN_GB.location.buildingNumber()} ${fakerEN_GB.location.street()}, ${fakerEN_GB.location.city()}, ${fakerEN_GB.location.county()}, United Kingdom, ${fakerEN_GB.location.zipCode()}`,
-    mobileNumber,
-    dateOfBirth: faker.date.birthdate({ min: 18, max: 80, mode: 'age' }).toISOString().split('T')[0], // Format: YYYY-MM-DD
-    lastBillingAmount: `$${faker.finance.amount(10, 500, 2)}`, // Random billing amount
-    lastPaymentMethod: faker.helpers.arrayElement(['Credit Card', 'Debit Card', 'Net Banking', 'EMI', 'Wallet']), // Random payment method
-
-  };
-
-  res.json(customerDetails);
 });
 
 
