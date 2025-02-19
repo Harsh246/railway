@@ -208,6 +208,48 @@ router.get('/api/techm/customer/:mobileNumber', (req, res) => {
 });
 
 
+
+router.get('/api/spirit/flight/:mobileNumber', (req, res) => {
+  const { mobileNumber } = req.params;
+
+  // Validate input
+  if (!mobileNumber) {
+    return res.status(400).json({ error: 'Mobile number is required.' });
+  }
+
+  try {
+    const flightStatus = ['On Time', 'Delayed', 'Cancelled', 'Boarding', 'Landed'];
+    const gateNumbers = ['A12', 'B5', 'C3', 'D7', 'E9'];
+    
+    // Generate mock flight details
+    const flightDetails = {
+      mobileNumber,
+      currentFlight: {
+        flightNumber: `NK${faker.number.int({ min: 100, max: 9999 })}`,
+        departure: `${faker.location.city()}, ${faker.location.stateAbbr()}`,
+        arrival: `${faker.location.city()}, ${faker.location.stateAbbr()}`,
+        departureTime: faker.date.soon().toISOString(),
+        arrivalTime: faker.date.soon({ days: 1 }).toISOString(),
+        status: faker.helpers.arrayElement(flightStatus),
+        gate: faker.helpers.arrayElement(gateNumbers),
+      },
+      nextFlight: {
+        flightNumber: `NK${faker.number.int({ min: 100, max: 9999 })}`,
+        departure: `${faker.location.city()}, ${faker.location.stateAbbr()}`,
+        arrival: `${faker.location.city()}, ${faker.location.stateAbbr()}`,
+        departureTime: faker.date.soon({ days: 2 }).toISOString(),
+        arrivalTime: faker.date.soon({ days: 3 }).toISOString(),
+        status: faker.helpers.arrayElement(flightStatus),
+        gate: faker.helpers.arrayElement(gateNumbers),
+      },
+    };
+
+    res.json(flightDetails);
+  } catch (err) {
+    console.debug("🚀 ~ router.get ~ err:", err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 // Serve the index.html file for the root route
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/index.html'));
