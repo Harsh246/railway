@@ -218,36 +218,33 @@ router.get('/api/spirit/flight/:mobileNumber', (req, res) => {
   }
 
   try {
-    const flightStatus = ['On Time', 'Delayed', 'Cancelled', 'Boarding', 'Landed'];
-    const gateNumbers = ['A12', 'B5', 'C3', 'D7', 'E9'];
-    
     // Generate mock flight details
-    const flightDetails = {
-      mobileNumber,
-      currentFlight: {
-        flightNumber: `NK${faker.number.int({ min: 100, max: 9999 })}`,
-        departure: `${faker.location.city()}, ${faker.location.stateAbbr()}`,
-        arrival: `${faker.location.city()}, ${faker.location.stateAbbr()}`,
-        departureTime: faker.date.soon().toISOString(),
-        arrivalTime: faker.date.soon({ days: 1 }).toISOString(),
-        status: faker.helpers.arrayElement(flightStatus),
-        gate: faker.helpers.arrayElement(gateNumbers),
-      },
-      nextFlight: {
-        flightNumber: `NK${faker.number.int({ min: 100, max: 9999 })}`,
-        departure: `${faker.location.city()}, ${faker.location.stateAbbr()}`,
-        arrival: `${faker.location.city()}, ${faker.location.stateAbbr()}`,
-        departureTime: faker.date.soon({ days: 2 }).toISOString(),
-        arrivalTime: faker.date.soon({ days: 3 }).toISOString(),
-        status: faker.helpers.arrayElement(flightStatus),
-        gate: faker.helpers.arrayElement(gateNumbers),
-      },
+    const currentFlight = {
+      flightNumber: `NK${faker.number.int({ min: 100, max: 999 })}`,
+      departure: `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
+      arrival: `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
+      departureTime: faker.date.soon({ days: 1 }).toISOString(),
+      arrivalTime: faker.date.soon({ days: 1, refDate: new Date(Date.now() + 2 * 60 * 60 * 1000) }).toISOString(),
+      status: faker.helpers.arrayElement(['On Time', 'Delayed', 'Cancelled']),
+      gate: `G${faker.number.int({ min: 1, max: 50 })}`
     };
 
-    res.json(flightDetails);
+    const nextFlight = {
+      flightNumber: `NK${faker.number.int({ min: 100, max: 999 })}`,
+      departure: `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
+      arrival: `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
+      departureTime: faker.date.soon({ days: 3 }).toISOString(),
+      arrivalTime: faker.date.soon({ days: 3, refDate: new Date(Date.now() + 2 * 60 * 60 * 1000) }).toISOString(),
+      status: faker.helpers.arrayElement(['On Time', 'Delayed', 'Cancelled']),
+      gate: `G${faker.number.int({ min: 1, max: 50 })}`
+    };
+
+    const flightData = { currentFlight, nextFlight };
+
+    res.json(flightData);
   } catch (err) {
-    console.debug("🚀 ~ router.get ~ err:", err);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("🚀 ~ Error fetching flight details:", err);
+    res.status(500).json({ error: 'Internal server error.' });
   }
 });
 // Serve the index.html file for the root route
