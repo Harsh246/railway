@@ -208,6 +208,20 @@ router.get('/api/techm/customer/:mobileNumber', (req, res) => {
 });
 
 
+// Function to generate a mock flight
+const generateFlight = (daysAhead, enforceStatus = false) => {
+  return {
+    flightNumber: `NK${faker.number.int({ min: 100, max: 999 })}`,
+    departure: `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
+    arrival: `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
+    departureTime: faker.date.soon({ days: daysAhead }).toISOString(),
+    arrivalTime: faker.date.soon({ days: daysAhead, refDate: new Date(Date.now() + 2 * 60 * 60 * 1000) }).toISOString(),
+    status: enforceStatus
+      ? "Scheduled" // Ensures next flight is never delayed/canceled
+      : faker.helpers.arrayElement(["On Time", "Delayed", "Cancelled"]),
+    gate: `G${faker.number.int({ min: 1, max: 50 })}`,
+  };
+};
 
 router.get('/api/spirit/flight/:mobileNumber', (req, res) => {
   const { mobileNumber } = req.params;
@@ -219,31 +233,19 @@ router.get('/api/spirit/flight/:mobileNumber', (req, res) => {
 
   try {
     // Generate mock flight details
-    const currentFlight = {
-      flightNumber: `NK${faker.number.int({ min: 100, max: 999 })}`,
-      departure: `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
-      arrival: `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
-      departureTime: faker.date.soon({ days: 1 }).toISOString(),
-      arrivalTime: faker.date.soon({ days: 1, refDate: new Date(Date.now() + 2 * 60 * 60 * 1000) }).toISOString(),
-      status: faker.helpers.arrayElement(['On Time', 'Delayed', 'Cancelled']),
-      gate: `G${faker.number.int({ min: 1, max: 50 })}`
-    };
+    const currentFlight = generateFlight(1);
+    let nextFlight = generateFlight(3, true); // Ensures "Scheduled" status
 
-    const nextFlight = {
-      flightNumber: `NK${faker.number.int({ min: 100, max: 999 })}`,
-      departure: `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
-      arrival: `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
-      departureTime: faker.date.soon({ days: 3 }).toISOString(),
-      arrivalTime: faker.date.soon({ days: 3, refDate: new Date(Date.now() + 2 * 60 * 60 * 1000) }).toISOString(),
-      status: faker.helpers.arrayElement(['On Time', 'Delayed', 'Cancelled']),
-      gate: `G${faker.number.int({ min: 1, max: 50 })}`
-    };
+    // Override if status was assigned as "Delayed" or "Cancelled"
+    if (["Delayed", "Cancelled"].includes(nextFlight.status)) {
+      nextFlight.status = "Scheduled";
+    }
 
     const flightData = { currentFlight, nextFlight };
 
     res.json(flightData);
   } catch (err) {
-    console.error("🚀 ~ Error fetching flight details:", err);
+    console.error(`🚀 ~ Error fetching flight details for ${mobileNumber}:`, err);
     res.status(500).json({ error: 'Internal server error.' });
   }
 });
