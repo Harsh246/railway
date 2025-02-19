@@ -209,11 +209,13 @@ router.get('/api/techm/customer/:mobileNumber', (req, res) => {
 
 
 // Function to generate a mock flight
-const generateFlight = (daysAhead, enforceStatus = false) => {
+
+// Function to generate a mock flight
+const generateFlight = (daysAhead, departure = null, arrival = null, enforceStatus = false) => {
   return {
     flightNumber: `NK${faker.number.int({ min: 100, max: 999 })}`,
-    departure: `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
-    arrival: `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
+    departure: departure || `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
+    arrival: arrival || `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
     departureTime: faker.date.soon({ days: daysAhead }).toISOString(),
     arrivalTime: faker.date.soon({ days: daysAhead, refDate: new Date(Date.now() + 2 * 60 * 60 * 1000) }).toISOString(),
     status: enforceStatus
@@ -232,9 +234,11 @@ router.get('/api/spirit/flight/:mobileNumber', (req, res) => {
   }
 
   try {
-    // Generate mock flight details
+    // Generate current flight
     const currentFlight = generateFlight(1);
-    let nextFlight = generateFlight(3, true); // Ensures "Scheduled" status
+
+    // Generate next flight with same departure & arrival, but a later date
+    let nextFlight = generateFlight(3, currentFlight.departure, currentFlight.arrival, true);
 
     // Override if status was assigned as "Delayed" or "Cancelled"
     if (["Delayed", "Cancelled"].includes(nextFlight.status)) {
@@ -249,6 +253,7 @@ router.get('/api/spirit/flight/:mobileNumber', (req, res) => {
     res.status(500).json({ error: 'Internal server error.' });
   }
 });
+
 // Serve the index.html file for the root route
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/index.html'));
