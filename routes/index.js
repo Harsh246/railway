@@ -254,6 +254,41 @@ router.get('/api/spirit/flight/:mobileNumber', (req, res) => {
   }
 });
 
+
+const generateCIBILDetails = () => {
+  return {
+    cibilScore: faker.number.int({ min: 300, max: 900 }),
+    creditUtilization: faker.number.float({ min: 10, max: 90, precision: 0.1 }) + "%",
+    totalAccounts: faker.number.int({ min: 2, max: 15 }),
+    activeLoans: faker.number.int({ min: 0, max: 5 }),
+    creditCardLimit: `₹${faker.number.int({ min: 50000, max: 1000000 }).toLocaleString()}`,
+    lastPaymentDate: faker.date.recent({ days: 60 }).toISOString().split("T")[0],
+    missedPayments: faker.number.int({ min: 0, max: 5 }),
+    creditAge: faker.number.int({ min: 1, max: 20 }) + " years",
+    remarks: faker.helpers.arrayElement([
+      "Good repayment history",
+      "High credit utilization",
+      "Low credit age",
+      "No missed payments",
+      "Recent loan inquiries detected",
+    ]),
+  };
+};
+
+
+router.get("/api/cibil/soft-pull/:mobileNumber", (req, res) => {
+  const { mobileNumber } = req.params;
+
+
+  res.json({
+    mobileNumber,
+    inquiryType: "Soft Pull",
+    fetchedAt: new Date().toISOString(),
+    ...generateCIBILDetails(),
+  });
+});
+
+
 // Serve the index.html file for the root route
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/index.html'));
