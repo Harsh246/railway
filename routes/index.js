@@ -261,7 +261,7 @@ const generateCIBILDetails = () => {
     creditUtilization: faker.number.float({ min: 10, max: 90, precision: 0.1 }) + "%",
     totalAccounts: faker.number.int({ min: 2, max: 15 }),
     activeLoans: faker.number.int({ min: 0, max: 5 }),
-    creditCardLimit: `₹${faker.number.int({ min: 50000, max: 1000000 }).toLocaleString()}`,
+    creditCardLimit: `$${faker.number.int({ min: 500, max: 10000 }).toLocaleString()}`,
     lastPaymentDate: faker.date.recent({ days: 60 }).toISOString().split("T")[0],
     missedPayments: faker.number.int({ min: 0, max: 5 }),
     creditAge: faker.number.int({ min: 1, max: 20 }) + " years",
