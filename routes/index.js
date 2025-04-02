@@ -297,35 +297,35 @@ const generateTaskStats = (taskId) => {
   const seed = parseInt(taskId, 36) % 1000;
   faker.seed(seed);
 
-  const seriesCount = faker.datatype.number({ min: 10, max: 50 });
-  const totalMatchesPlayed = faker.datatype.number({ min: 100, max: 500 });
-  const totalContestsEntered = faker.datatype.number({ min: 200, max: 1000 });
-  const winRate = faker.datatype.float({ min: 30, max: 70 }).toFixed(2) + "%";
+  const seriesCount = faker.number.int({ min: 10, max: 50 });
+  const totalMatchesPlayed = faker.number.int({ min: 100, max: 500 });
+  const totalContestsEntered = faker.number.int({ min: 200, max: 1000 });
+  const winRate = faker.number.float({ min: 30, max: 70 }).toFixed(2) + "%";
 
-  const recentMatches = Array.from({ length: faker.datatype.number({ min: 5, max: 10 }) }, () => {
-    const team1 = faker.helpers.randomize(IPL_TEAMS);
-    let team2 = faker.helpers.randomize(IPL_TEAMS);
-    while (team1 === team2) team2 = faker.helpers.randomize(IPL_TEAMS);
+  const recentMatches = Array.from({ length: faker.number.int({ min: 5, max: 10 }) }, () => {
+    const team1 = faker.helpers.arrayElement(IPL_TEAMS);
+    let team2 = faker.helpers.arrayElement(IPL_TEAMS);
+    while (team1 === team2) team2 = faker.helpers.arrayElement(IPL_TEAMS);
 
     const matchResult = faker.datatype.boolean()
-      ? `${team1} beat ${team2} by ${faker.datatype.number({ min: 1, max: 100 })} runs`
-      : `${team1} beat ${team2} by ${faker.datatype.number({ min: 1, max: 10 })} wickets`;
+      ? `${team1} beat ${team2} by ${faker.number.int({ min: 1, max: 100 })} runs`
+      : `${team1} beat ${team2} by ${faker.number.int({ min: 1, max: 10 })} wickets`;
 
     const matchStatus = faker.datatype.boolean() ? "Completed" : "Pending";
     const joinedStatus = faker.datatype.boolean();
     const contestWonStatus = joinedStatus && faker.datatype.boolean();
-    const pointsScored = faker.datatype.number({ min: 400, max: 800 });
-    const dreamTeamScore = pointsScored + faker.datatype.number({ min: 100, max: 500 });
-    const amountCredited = contestWonStatus ? faker.datatype.number({ min: 0, max: 5000 }) : 0;
-    const creditType = amountCredited > 0 ? faker.helpers.randomize(["FPV", "Direct"]) : null;
-    const transactionId = amountCredited > 0 ? faker.datatype.uuid() : null;
+    const pointsScored = faker.number.int({ min: 400, max: 800 });
+    const dreamTeamScore = pointsScored + faker.number.int({ min: 100, max: 500 });
+    const amountCredited = contestWonStatus ? faker.number.int({ min: 0, max: 5000 }) : 0;
+    const creditType = amountCredited > 0 ? faker.helpers.arrayElement(["FPV", "Direct"]) : null;
+    const transactionId = amountCredited > 0 ? faker.string.uuid() : null;
 
     return {
-      matchId: faker.datatype.uuid(),
+      matchId: faker.string.uuid(),
       teams: `${team1} vs ${team2}`,
       sportType: "Cricket",
       matchResult,
-      matchDate: faker.date.recent(30).toISOString(),
+      matchDate: faker.date.recent({ days: 30 }).toISOString(),
       matchStatus,
       userParticipation: {
         joinedStatus,
@@ -333,8 +333,8 @@ const generateTaskStats = (taskId) => {
       },
       userPerformance: {
         pointsScored,
-        tournamentType: faker.helpers.randomize(["T1", "T10", "T20"]),
-        teamsCreated: faker.datatype.number({ min: 1, max: 5 }),
+        tournamentType: faker.helpers.arrayElement(["T1", "T10", "T20"]),
+        teamsCreated: faker.number.int({ min: 1, max: 5 }),
         dreamTeamScore
       },
       winnings: {
@@ -373,5 +373,8 @@ app.get('/api/fantasy-stats/:taskId', (req, res) => {
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/index.html'));
 });
+
+
+generateTaskStats(344)
 
 module.exports = router;
