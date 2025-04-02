@@ -298,66 +298,53 @@ const generateTaskStats = (taskId) => {
   faker.seed(seed);
 
   const seriesCount = faker.number.int({ min: 10, max: 50 });
-  const totalMatchesPlayed = faker.number.int({ min: 100, max: 500 });
-  const totalContestsEntered = faker.number.int({ min: 200, max: 1000 });
-  const winRate = faker.number.float({ min: 30, max: 70 }).toFixed(2) + "%";
+  const totalMatches = faker.number.int({ min: 100, max: 500 });
+  const totalContests = faker.number.int({ min: 200, max: 1000 });
+  const winRate = faker.number.int({ min: 30, max: 70 });
 
   const recentMatches = Array.from({ length: faker.number.int({ min: 5, max: 10 }) }, () => {
     const team1 = faker.helpers.arrayElement(IPL_TEAMS);
     let team2 = faker.helpers.arrayElement(IPL_TEAMS);
     while (team1 === team2) team2 = faker.helpers.arrayElement(IPL_TEAMS);
 
-    const matchResult = faker.datatype.boolean()
-      ? `${team1} beat ${team2} by ${faker.number.int({ min: 1, max: 100 })} runs`
-      : `${team1} beat ${team2} by ${faker.number.int({ min: 1, max: 10 })} wickets`;
+    const isRuns = faker.datatype.boolean();
+    const margin = isRuns
+      ? `${faker.number.int({ min: 1, max: 100 })} runs`
+      : `${faker.number.int({ min: 1, max: 10 })} wickets`;
 
-    const matchStatus = faker.datatype.boolean() ? "Completed" : "Pending";
-    const joinedStatus = faker.datatype.boolean();
-    const contestWonStatus = joinedStatus && faker.datatype.boolean();
-    const pointsScored = faker.number.int({ min: 400, max: 800 });
-    const dreamTeamScore = pointsScored + faker.number.int({ min: 100, max: 500 });
-    const amountCredited = contestWonStatus ? faker.number.int({ min: 0, max: 5000 }) : 0;
-    const creditType = amountCredited > 0 ? faker.helpers.arrayElement(["FPV", "Direct"]) : null;
-    const transactionId = amountCredited > 0 ? faker.string.uuid() : null;
+    const winner = faker.datatype.boolean() ? team1 : team2;
+    const loser = winner === team1 ? team2 : team1;
 
     return {
       matchId: faker.string.uuid(),
-      teams: `${team1} vs ${team2}`,
-      sportType: "Cricket",
-      matchResult,
-      matchDate: faker.date.recent({ days: 30 }).toISOString(),
-      matchStatus,
-      userParticipation: {
-        joinedStatus,
-        contestWonStatus
-      },
-      userPerformance: {
-        pointsScored,
-        tournamentType: faker.helpers.arrayElement(["T1", "T10", "T20"]),
-        teamsCreated: faker.number.int({ min: 1, max: 5 }),
-        dreamTeamScore
-      },
+      team1,
+      team2,
+      winner,
+      loser,
+      margin,
+      date: faker.date.recent({ days: 30 }).toISOString(),
+      status: faker.datatype.boolean() ? "Completed" : "Pending",
+      pointsScored: faker.number.float({ min: 400, max: 800 }),
+      tournamentType: faker.helpers.arrayElement(["T1", "T10", "T20"]),
+      teamsCreated: faker.number.int({ min: 1, max: 5 }),
+      dreamTeamScore: faker.number.float({ min: 500, max: 1300 }),
       winnings: {
-        amountCredited,
-        creditType,
-        transactionId
-      }
+        amount: faker.number.int({ min: 0, max: 5000 }),
+        creditType: faker.helpers.arrayElement(["FPV", "Direct"]),
+      },
+      joined: faker.datatype.boolean(),
+      won: faker.datatype.boolean(),
     };
   });
 
   return {
-    mobileNumber: `user-${taskId}@example.com`,
-    inquiryType: "Soft Pull",
-    fetchedAt: new Date().toISOString(),
-    overallStats: {
-      seriesCount,
-      totalMatchesPlayed,
-      totalContestsEntered,
-      winRate
-    },
-    recentMatches
+    seriesCount,
+    totalMatches,
+    totalContests,
+    winRate,
+    recentMatches,
   };
-};
+}
 
 router.get('/api/fantasy-stats/:taskId', (req, res) => {
   const { taskId } = req.params;
