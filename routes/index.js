@@ -289,6 +289,86 @@ router.get("/api/cibil/soft-pull/:mobileNumber", (req, res) => {
 });
 
 
+
+const IPL_TEAMS = ["DC", "SRH", "RCB", "MI", "CSK", "KKR", "PBKS", "RR", "LSG", "GT"];
+
+// Function to generate deterministic fake data based on taskId
+const generateTaskStats = (taskId) => {
+  const seed = parseInt(taskId, 36) % 1000;
+  faker.seed(seed);
+
+  const seriesCount = faker.datatype.number({ min: 10, max: 50 });
+  const totalMatchesPlayed = faker.datatype.number({ min: 100, max: 500 });
+  const totalContestsEntered = faker.datatype.number({ min: 200, max: 1000 });
+  const winRate = faker.datatype.float({ min: 30, max: 70 }).toFixed(2) + "%";
+
+  const recentMatches = Array.from({ length: faker.datatype.number({ min: 5, max: 10 }) }, () => {
+    const team1 = faker.helpers.randomize(IPL_TEAMS);
+    let team2 = faker.helpers.randomize(IPL_TEAMS);
+    while (team1 === team2) team2 = faker.helpers.randomize(IPL_TEAMS);
+
+    const matchResult = faker.datatype.boolean()
+      ? `${team1} beat ${team2} by ${faker.datatype.number({ min: 1, max: 100 })} runs`
+      : `${team1} beat ${team2} by ${faker.datatype.number({ min: 1, max: 10 })} wickets`;
+
+    const matchStatus = faker.datatype.boolean() ? "Completed" : "Pending";
+    const joinedStatus = faker.datatype.boolean();
+    const contestWonStatus = joinedStatus && faker.datatype.boolean();
+    const pointsScored = faker.datatype.number({ min: 400, max: 800 });
+    const dreamTeamScore = pointsScored + faker.datatype.number({ min: 100, max: 500 });
+    const amountCredited = contestWonStatus ? faker.datatype.number({ min: 0, max: 5000 }) : 0;
+    const creditType = amountCredited > 0 ? faker.helpers.randomize(["FPV", "Direct"]) : null;
+    const transactionId = amountCredited > 0 ? faker.datatype.uuid() : null;
+
+    return {
+      matchId: faker.datatype.uuid(),
+      teams: `${team1} vs ${team2}`,
+      sportType: "Cricket",
+      matchResult,
+      matchDate: faker.date.recent(30).toISOString(),
+      matchStatus,
+      userParticipation: {
+        joinedStatus,
+        contestWonStatus
+      },
+      userPerformance: {
+        pointsScored,
+        tournamentType: faker.helpers.randomize(["T1", "T10", "T20"]),
+        teamsCreated: faker.datatype.number({ min: 1, max: 5 }),
+        dreamTeamScore
+      },
+      winnings: {
+        amountCredited,
+        creditType,
+        transactionId
+      }
+    };
+  });
+
+  return {
+    mobileNumber: `user-${taskId}@example.com`,
+    inquiryType: "Soft Pull",
+    fetchedAt: new Date().toISOString(),
+    overallStats: {
+      seriesCount,
+      totalMatchesPlayed,
+      totalContestsEntered,
+      winRate
+    },
+    recentMatches
+  };
+};
+
+app.get('/api/fantasy-stats/:taskId', (req, res) => {
+  const { taskId } = req.params;
+  if (!taskId) {
+    return res.status(400).json({ error: "Task ID is required" });
+  }
+
+  const stats = generateTaskStats(taskId);
+  res.json(stats);
+});
+
 // Serve the index.html file for the root route
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/index.html'));
