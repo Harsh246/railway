@@ -359,7 +359,7 @@ const generateTaskStats = (taskId) => {
   };
 };
 
-app.get('/api/fantasy-stats/:taskId', (req, res) => {
+router.get('/api/fantasy-stats/:taskId', (req, res) => {
   const { taskId } = req.params;
   if (!taskId) {
     return res.status(400).json({ error: "Task ID is required" });
