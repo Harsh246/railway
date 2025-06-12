@@ -3,6 +3,8 @@ const { faker, fakerEN_GB, fakerEN_IN } = require('@faker-js/faker');
 const path = require('path');
 const router = express.Router();
 
+
+router.use(express.json());
 // Global state to track the current step in the loop
 let callStep = 0; // Starts at 0: 0 -> Not Delivered, 1 -> Delivered (within 24h), 2 -> Delivered (not within 24h), 3 -> Delivered (lastContacted within 24h)
 
