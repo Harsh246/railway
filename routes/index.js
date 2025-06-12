@@ -501,6 +501,39 @@ router.get('/api/exotel/order-status/:orderId', (req, res) => {
   }
 });
 
+
+// Endpoint to issue a voucher to customer account
+router.post('/api/exotel/issue-voucher', (req, res) => {
+  const { mobileNumber, fullName } = req.body;
+
+  if (!mobileNumber || !fullName) {
+    return res.status(400).json({ error: 'Full name and mobile number are required.' });
+  }
+
+  try {
+    const voucherCode = `EXO-${faker.string.alphanumeric(6).toUpperCase()}`;
+    const voucherAmount = `₹${faker.finance.amount(500, 2500, 0)}`;
+    const expiryDate = faker.date.soon({ days: 30 }).toISOString().split('T')[0]; // Format: YYYY-MM-DD
+
+    const message = `🎉 Voucher issued successfully! Code "${voucherCode}" worth ${voucherAmount} has been added to user's account. Valid till ${expiryDate}.`;
+
+    res.json({
+      message,
+      mobileNumber,
+      voucher: {
+        code: voucherCode,
+        amount: voucherAmount,
+        issuedAt: new Date().toISOString(),
+        validTill: expiryDate
+      }
+    });
+  } catch (err) {
+    console.error("🚨 Error issuing voucher:", err);
+    res.status(500).json({ error: 'Failed to issue voucher.' });
+  }
+});
+
+
 // Serve the index.html file for the root route
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/index.html'));
