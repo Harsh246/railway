@@ -3,6 +3,113 @@ const { faker, fakerEN_GB, fakerEN_IN } = require('@faker-js/faker');
 const path = require('path');
 const router = express.Router();
 
+const robin = {
+  status: "Authenticated",
+  sgsn: "Attached",
+  balstatus: 500,
+  loc: "5G Network Available",
+  brand: "EE",
+  ctype: "Consumer PAYM",
+  anumber: "158159255",
+  name: "Robin Kundra",
+  postcode: "DL38NW",
+  area: "Delhi", // Random area in India for Robin
+  barring: "Not Data",
+  roaming: "Enabled",
+  llnumber: "Not Data",
+  username: "610042995",
+  idIdentified: "True",
+  idValidated: "True",
+  idValidationLeval: "High",
+  manualmode: "False",
+  customerRole: "Account Holder",
+  loscotrialflag: "No",
+  quickanswerflag: "Yes",
+  subsplan: "PAYM",
+  customertype: "Consumer",
+  brand1: "EE(Consumer and Small Business)",
+  hubValidated: "Yes",
+  deviceName: "Samsung Galaxy Z Flip 5",
+  networkType: "5G",
+  connectivity: "Wifi, Bluetooth, NFC, Wifi Hotspot",
+  camera: "12 MP",
+  battery: "Li-Po 3700 mAh, non-removable",
+  os: "Android 13, upgradable to Android 14, One UI 6",
+  imei: 490154203467891,
+  mobileNumber: "+91 76890 45678",
+};
+
+const munish = {
+  status: "Authenticated",
+  sgsn: "Attached",
+  balstatus: 350,
+  loc: "5G Network Available",
+  brand: "EE",
+  ctype: "Consumer PAYM",
+  anumber: "158159255",
+  name: "Munish Kumar",
+  postcode: "DL38NW",
+  area: "Mumbai", // Random area in India for Munish
+  barring: "Not Data",
+  roaming: "Enabled",
+  llnumber: "Not Data",
+  username: "610042995",
+  idIdentified: "True",
+  idValidated: "True",
+  idValidationLeval: "High",
+  manualmode: "False",
+  customerRole: "Account Holder",
+  loscotrialflag: "No",
+  quickanswerflag: "Yes",
+  subsplan: "PAYM",
+  customertype: "Consumer",
+  brand1: "EE(Consumer and Small Business)",
+  hubValidated: "Yes",
+  deviceName: "Apple iPhone 15",
+  networkType: "5G",
+  connectivity: "Wifi, Bluetooth, NFC, Wifi Hotspot",
+  camera: "48 MP",
+  battery: "Li-Ion 3300 mAh, non-removable",
+  os: "iOS 17",
+  imei: 869748213456789,
+  mobileNumber: "+91 70123 45678",
+};
+
+const amit = {
+  status: "Authenticated",
+  sgsn: "Attached",
+  balstatus: 4,
+  loc: "5G Network Available",
+  brand: "EE",
+  ctype: "Consumer PAYM",
+  anumber: "158159255",
+  name: "Amit Kumar",
+  postcode: "DL38NW",
+  area: "Bangalore", // Random area in India for Amit
+  barring: "Not Data",
+  roaming: "Enabled",
+  llnumber: "Not Data",
+  username: "610042995",
+  idIdentified: "True",
+  idValidated: "True",
+  idValidationLeval: "High",
+  manualmode: "False",
+  customerRole: "Account Holder",
+  loscotrialflag: "No",
+  quickanswerflag: "Yes",
+  subsplan: "PAYM",
+  customertype: "Consumer",
+  brand1: "EE(Consumer and Small Business)",
+  hubValidated: "Yes",
+  deviceName: "Apple iPhone 15",
+  networkType: "5G",
+  connectivity: "Wifi, Bluetooth, NFC, Wifi Hotspot",
+  camera: "48 MP",
+  battery: "Li-Ion 3300 mAh, non-removable",
+  os: "iOS 17",
+  imei: 354840789345672,
+  mobileNumber: "+91 90153 87546",
+};
 
 router.use(express.json());
 // Global state to track the current step in the loop
@@ -536,12 +643,26 @@ router.post('/api/exotel/issue-voucher', (req, res) => {
 });
 
 
+router.get("/api/internet/:id", (req, res) => {
+  const id = parseInt(req.params.id, 10); // ensure it's a number
+
+  let data = amit;
+
+  if (id > 50 && id <= 70) {
+    data = munish;
+  } else if (id > 70) {
+    data = robin;
+  }
+
+  res.json(data);
+});
+
+
 // Serve the index.html file for the root route
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/index.html'));
 });
 
 
-generateTaskStats(344)
 
 module.exports = router;
