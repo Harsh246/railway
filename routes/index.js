@@ -644,12 +644,12 @@ router.post('/api/exotel/issue-voucher', (req, res) => {
 
 
 router.get("/api/internet/:id", (req, res) => {
-  const id = parseInt(req.params.id, 10); // ensure it's a number
+  const id = req.params.id // ensure it's a number
 
-  let data = amit;
+  let data = munish;
 
   if (id === '1234567890') {
-    data = munish;
+    data = amit;
   } else if (id === '0987654321') {
     data = robin;
   }
