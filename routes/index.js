@@ -648,11 +648,12 @@ router.get("/api/internet/:id", (req, res) => {
 
   let data = amit;
 
-  if (id > 50 && id <= 70) {
+  if (id === '1234567890') {
     data = munish;
-  } else if (id > 70) {
+  } else if (id === '0987654321') {
     data = robin;
   }
+  data.mobileNumber = id
 
   res.json(data);
 });
