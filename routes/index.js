@@ -704,7 +704,7 @@ const simulateRestart = (accountNumber) => {
   const seed = parseInt(accountNumber.replace(/\D/g, ""), 10) || 500;
   faker.seed(seed);
 
-  const rebootStatus = faker.helpers.arrayElement(["In Progress", "Failed", "Completed"]);
+  const rebootStatus = faker.helpers.arrayElement(["In Progress", "Completed"]);
   const eta = faker.date.soon({ days: 0.01 }); // in a few minutes
 
   return {
