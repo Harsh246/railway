@@ -659,11 +659,97 @@ router.get("/api/internet/:id", (req, res) => {
 });
 
 
+
+
+
+
+const generateCustomerInfo = (identifier) => {
+  const seed = parseInt(identifier.replace(/\D/g, ""), 10) || 999;
+  faker.seed(seed);
+
+  // Known, real US cities with state + ZIP patterns
+  const cityData = [
+    { city: "Los Angeles", state: "California", zipPrefix: "90" },
+    { city: "Dallas", state: "Texas", zipPrefix: "75" },
+    { city: "Chicago", state: "Illinois", zipPrefix: "60" },
+    { city: "Miami", state: "Florida", zipPrefix: "33" },
+    { city: "New York", state: "New York", zipPrefix: "10" },
+  ];
+  const selected = faker.helpers.arrayElement(cityData);
+
+  return {
+    name: faker.person.fullName(),
+    address: `${faker.location.streetAddress()}, ${selected.city}, ${selected.state} ${selected.zipPrefix}${faker.number.int({ min: 100, max: 999 })}`,
+    accountStatus: faker.helpers.arrayElement(["Active", "Inactive", "Suspended"]),
+    services: faker.helpers.arrayElements(["Internet", "Phone", "TV"], { min: 1, max: 3 }),
+    devices: faker.helpers.arrayElements(["T-Mobile Gateway", "SIM Card", "Set-top box", "Router"], { min: 1, max: 3 }),
+    notes: faker.helpers.arrayElement([
+      "Customer recently upgraded their plan.",
+      "Reported signal issues last week.",
+      "No contact in the last 30 days.",
+      "Scheduled for a service visit.",
+      "Has an active support ticket pending resolution."
+    ]),
+  };
+};
+
+
+router.get("/api/customer/:identifier", (req, res) => {
+  const { identifier } = req.params;
+  const data = generateCustomerInfo(identifier);
+  res.json(data);
+});
+
+const simulateRestart = (accountNumber) => {
+  const seed = parseInt(accountNumber.replace(/\D/g, ""), 10) || 500;
+  faker.seed(seed);
+
+  const rebootStatus = faker.helpers.arrayElement(["In Progress", "Failed", "Completed"]);
+  const eta = faker.date.soon({ days: 0.01 }); // in a few minutes
+
+  return {
+    status: rebootStatus,
+    estimatedSLA: `${faker.number.int({ min: 1, max: 5 })} minutes`,
+    startedAt: new Date().toISOString(),
+    expectedCompletion: eta.toISOString(),
+    message: rebootStatus === "Failed" ? "System timeout. Please try again." : "Restart request acknowledged.",
+  };
+};
+
+
+
+const generateRecentCases = (identifier) => {
+  const seed = parseInt(identifier.replace(/\D/g, ""), 10) || 1000;
+  faker.seed(seed);
+
+  return Array.from({ length: faker.number.int({ min: 3, max: 5 }) }, (_, i) => ({
+    caseId: `SR-${faker.string.alphanumeric(6).toUpperCase()}`,
+    issueDate: faker.date.recent({ days: 30 }).toISOString().split("T")[0],
+    description: faker.lorem.sentence(),
+    troubleshootingSteps: faker.lorem.sentences(2),
+    resolution: faker.helpers.arrayElement(["Pending", "In Progress", "Resolved"]),
+  }));
+};
+
+router.get("/api/customer/:identifier/recent-cases", (req, res) => {
+  const { identifier } = req.params;
+  const cases = generateRecentCases(identifier);
+  res.json(cases);
+});
+
+
+router.get("/api/system-central/restart", (req, res) => {
+  const { accountNumber } = req.body;
+  const result = simulateRestart(accountNumber);
+  res.json(result);
+});
+
+
+
 // Serve the index.html file for the root route
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/index.html'));
 });
-
 
 
 module.exports = router;
