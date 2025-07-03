@@ -738,8 +738,8 @@ router.get("/api/customer/:identifier/recent-cases", (req, res) => {
 });
 
 
-router.get("/api/system-central/restart", (req, res) => {
-  const { accountNumber } = req.body;
+router.get("/api/system-central/restart/:accountNumber", (req, res) => {
+  const { accountNumber } = req.params;
   const result = simulateRestart(accountNumber);
   res.json(result);
 });
