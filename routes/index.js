@@ -722,14 +722,25 @@ const generateRecentCases = (identifier) => {
   const seed = parseInt(identifier.replace(/\D/g, ""), 10) || 1000;
   faker.seed(seed);
 
-  return Array.from({ length: faker.number.int({ min: 3, max: 5 }) }, (_, i) => ({
+  const callerName = faker.person.fullName(); // Same name for all cases
+
+  const cases = Array.from({ length: faker.number.int({ min: 3, max: 5 }) }, () => ({
     caseId: `SR-${faker.string.alphanumeric(6).toUpperCase()}`,
-    issueDate: faker.date.recent({ days: 30 }).toISOString().split("T")[0],
+    issueDate: faker.date.recent({ days: 30 }),
     description: faker.lorem.sentence(),
     troubleshootingSteps: faker.lorem.sentences(2),
     resolution: faker.helpers.arrayElement(["Pending", "In Progress", "Resolved"]),
+    callerName,
   }));
+
+  return cases
+    .sort((a, b) => b.issueDate.getTime() - a.issueDate.getTime()) // Descending
+    .map((item) => ({
+      ...item,
+      issueDate: item.issueDate.toISOString().split("T")[0], // Format date
+    }));
 };
+
 
 router.get("/api/customer/:identifier/recent-cases", (req, res) => {
   const { identifier } = req.params;
