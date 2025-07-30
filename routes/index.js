@@ -1,143 +1,143 @@
-const express = require('express');
-const { faker, fakerEN_GB, fakerEN_IN } = require('@faker-js/faker');
-const path = require('path');
-const router = express.Router();
+const express = require('express')
+const { faker, fakerEN_GB, fakerEN_IN } = require('@faker-js/faker')
+const path = require('path')
+const router = express.Router()
 
 const robin = {
-  status: "Authenticated",
-  sgsn: "Attached",
+  status: 'Authenticated',
+  sgsn: 'Attached',
   balstatus: 500,
-  loc: "5G Network Available",
-  brand: "EE",
-  ctype: "Consumer PAYM",
-  anumber: "158159255",
-  name: "Robin Kundra",
-  postcode: "DL38NW",
-  area: "Delhi", // Random area in India for Robin
-  barring: "Not Data",
-  roaming: "Enabled",
-  llnumber: "Not Data",
-  username: "610042995",
-  idIdentified: "True",
-  idValidated: "True",
-  idValidationLeval: "High",
-  manualmode: "False",
-  customerRole: "Account Holder",
-  loscotrialflag: "No",
-  quickanswerflag: "Yes",
-  subsplan: "PAYM",
-  customertype: "Consumer",
-  brand1: "EE(Consumer and Small Business)",
-  hubValidated: "Yes",
-  deviceName: "Samsung Galaxy Z Flip 5",
-  networkType: "5G",
-  connectivity: "Wifi, Bluetooth, NFC, Wifi Hotspot",
-  camera: "12 MP",
-  battery: "Li-Po 3700 mAh, non-removable",
-  os: "Android 13, upgradable to Android 14, One UI 6",
+  loc: '5G Network Available',
+  brand: 'EE',
+  ctype: 'Consumer PAYM',
+  anumber: '158159255',
+  name: 'Robin Kundra',
+  postcode: 'DL38NW',
+  area: 'Delhi', // Random area in India for Robin
+  barring: 'Not Data',
+  roaming: 'Enabled',
+  llnumber: 'Not Data',
+  username: '610042995',
+  idIdentified: 'True',
+  idValidated: 'True',
+  idValidationLeval: 'High',
+  manualmode: 'False',
+  customerRole: 'Account Holder',
+  loscotrialflag: 'No',
+  quickanswerflag: 'Yes',
+  subsplan: 'PAYM',
+  customertype: 'Consumer',
+  brand1: 'EE(Consumer and Small Business)',
+  hubValidated: 'Yes',
+  deviceName: 'Samsung Galaxy Z Flip 5',
+  networkType: '5G',
+  connectivity: 'Wifi, Bluetooth, NFC, Wifi Hotspot',
+  camera: '12 MP',
+  battery: 'Li-Po 3700 mAh, non-removable',
+  os: 'Android 13, upgradable to Android 14, One UI 6',
   imei: 490154203467891,
-  mobileNumber: "+91 76890 45678",
-};
+  mobileNumber: '+91 76890 45678'
+}
 
 const munish = {
-  status: "Authenticated",
-  sgsn: "Attached",
+  status: 'Authenticated',
+  sgsn: 'Attached',
   balstatus: 350,
-  loc: "5G Network Available",
-  brand: "EE",
-  ctype: "Consumer PAYM",
-  anumber: "158159255",
-  name: "Munish Kumar",
-  postcode: "DL38NW",
-  area: "Mumbai", // Random area in India for Munish
-  barring: "Not Data",
-  roaming: "Enabled",
-  llnumber: "Not Data",
-  username: "610042995",
-  idIdentified: "True",
-  idValidated: "True",
-  idValidationLeval: "High",
-  manualmode: "False",
-  customerRole: "Account Holder",
-  loscotrialflag: "No",
-  quickanswerflag: "Yes",
-  subsplan: "PAYM",
-  customertype: "Consumer",
-  brand1: "EE(Consumer and Small Business)",
-  hubValidated: "Yes",
-  deviceName: "Apple iPhone 15",
-  networkType: "5G",
-  connectivity: "Wifi, Bluetooth, NFC, Wifi Hotspot",
-  camera: "48 MP",
-  battery: "Li-Ion 3300 mAh, non-removable",
-  os: "iOS 17",
+  loc: '5G Network Available',
+  brand: 'EE',
+  ctype: 'Consumer PAYM',
+  anumber: '158159255',
+  name: 'Munish Kumar',
+  postcode: 'DL38NW',
+  area: 'Mumbai', // Random area in India for Munish
+  barring: 'Not Data',
+  roaming: 'Enabled',
+  llnumber: 'Not Data',
+  username: '610042995',
+  idIdentified: 'True',
+  idValidated: 'True',
+  idValidationLeval: 'High',
+  manualmode: 'False',
+  customerRole: 'Account Holder',
+  loscotrialflag: 'No',
+  quickanswerflag: 'Yes',
+  subsplan: 'PAYM',
+  customertype: 'Consumer',
+  brand1: 'EE(Consumer and Small Business)',
+  hubValidated: 'Yes',
+  deviceName: 'Apple iPhone 15',
+  networkType: '5G',
+  connectivity: 'Wifi, Bluetooth, NFC, Wifi Hotspot',
+  camera: '48 MP',
+  battery: 'Li-Ion 3300 mAh, non-removable',
+  os: 'iOS 17',
   imei: 869748213456789,
-  mobileNumber: "+91 70123 45678",
-};
+  mobileNumber: '+91 70123 45678'
+}
 
 const amit = {
-  status: "Authenticated",
-  sgsn: "Attached",
+  status: 'Authenticated',
+  sgsn: 'Attached',
   balstatus: 4,
-  loc: "5G Network Available",
-  brand: "EE",
-  ctype: "Consumer PAYM",
-  anumber: "158159255",
-  name: "Amit Kumar",
-  postcode: "DL38NW",
-  area: "Bangalore", // Random area in India for Amit
-  barring: "Not Data",
-  roaming: "Enabled",
-  llnumber: "Not Data",
-  username: "610042995",
-  idIdentified: "True",
-  idValidated: "True",
-  idValidationLeval: "High",
-  manualmode: "False",
-  customerRole: "Account Holder",
-  loscotrialflag: "No",
-  quickanswerflag: "Yes",
-  subsplan: "PAYM",
-  customertype: "Consumer",
-  brand1: "EE(Consumer and Small Business)",
-  hubValidated: "Yes",
-  deviceName: "Apple iPhone 15",
-  networkType: "5G",
-  connectivity: "Wifi, Bluetooth, NFC, Wifi Hotspot",
-  camera: "48 MP",
-  battery: "Li-Ion 3300 mAh, non-removable",
-  os: "iOS 17",
+  loc: '5G Network Available',
+  brand: 'EE',
+  ctype: 'Consumer PAYM',
+  anumber: '158159255',
+  name: 'Amit Kumar',
+  postcode: 'DL38NW',
+  area: 'Bangalore', // Random area in India for Amit
+  barring: 'Not Data',
+  roaming: 'Enabled',
+  llnumber: 'Not Data',
+  username: '610042995',
+  idIdentified: 'True',
+  idValidated: 'True',
+  idValidationLeval: 'High',
+  manualmode: 'False',
+  customerRole: 'Account Holder',
+  loscotrialflag: 'No',
+  quickanswerflag: 'Yes',
+  subsplan: 'PAYM',
+  customertype: 'Consumer',
+  brand1: 'EE(Consumer and Small Business)',
+  hubValidated: 'Yes',
+  deviceName: 'Apple iPhone 15',
+  networkType: '5G',
+  connectivity: 'Wifi, Bluetooth, NFC, Wifi Hotspot',
+  camera: '48 MP',
+  battery: 'Li-Ion 3300 mAh, non-removable',
+  os: 'iOS 17',
   imei: 354840789345672,
-  mobileNumber: "+91 90153 87546",
-};
+  mobileNumber: '+91 90153 87546'
+}
 
-router.use(express.json());
+router.use(express.json())
 // Global state to track the current step in the loop
-let callStep = 0; // Starts at 0: 0 -> Not Delivered, 1 -> Delivered (within 24h), 2 -> Delivered (not within 24h), 3 -> Delivered (lastContacted within 24h)
+let callStep = 0 // Starts at 0: 0 -> Not Delivered, 1 -> Delivered (within 24h), 2 -> Delivered (not within 24h), 3 -> Delivered (lastContacted within 24h)
 
 // Helper function to generate mock customer and order details
 const generateMockDetails = () => {
   // Increment callStep and reset to 0 if it exceeds 3
-  callStep = (callStep + 1) % 4;
+  callStep = (callStep + 1) % 4
 
   // Determine orderStatus, orderDate, and lastContacted based on the callStep
-  let orderStatus, lastContacted, orderDate;
+  let orderStatus, lastContacted, orderDate
   if (callStep === 0) {
-    orderStatus = 'Not Delivered';
-    lastContacted = faker.date.past().toISOString(); // Random past date
-    orderDate = faker.date.past().toISOString(); // Random past date
+    orderStatus = 'Not Delivered'
+    lastContacted = faker.date.past().toISOString() // Random past date
+    orderDate = faker.date.past().toISOString() // Random past date
   } else if (callStep === 1) {
-    orderStatus = 'Delivered';
-    lastContacted = faker.date.recent({ days: 1 }).toISOString(); // Within the last 24 hours
-    orderDate = faker.date.recent({ days: 1 }).toISOString(); // Order date also within 24 hours
+    orderStatus = 'Delivered'
+    lastContacted = faker.date.recent({ days: 1 }).toISOString() // Within the last 24 hours
+    orderDate = faker.date.recent({ days: 1 }).toISOString() // Order date also within 24 hours
   } else if (callStep === 2) {
-    orderStatus = 'Delivered';
-    lastContacted = faker.date.past().toISOString(); // Random earlier date (not within 24 hours)
-    orderDate = faker.date.past().toISOString(); // Order date also past date
+    orderStatus = 'Delivered'
+    lastContacted = faker.date.past().toISOString() // Random earlier date (not within 24 hours)
+    orderDate = faker.date.past().toISOString() // Order date also past date
   } else if (callStep === 3) {
-    orderStatus = 'Delivered';
-    lastContacted = faker.date.recent({ days: 1 }).toISOString(); // Within the last 24 hours
-    orderDate = faker.date.past().toISOString(); // Order date is older than 24 hours
+    orderStatus = 'Delivered'
+    lastContacted = faker.date.recent({ days: 1 }).toISOString() // Within the last 24 hours
+    orderDate = faker.date.past().toISOString() // Order date is older than 24 hours
   }
 
   return {
@@ -158,36 +158,38 @@ const generateMockDetails = () => {
       }).map(() => ({
         itemName: faker.commerce.productName(),
         quantity: faker.number.int({ min: 1, max: 5 }),
-        price: faker.commerce.price(),
+        price: faker.commerce.price()
       })),
-      totalAmount: faker.commerce.price(),
+      totalAmount: faker.commerce.price()
     })),
     lastComplaint: faker.lorem.sentence(),
     loyaltyPoints: faker.number.int({ min: 0, max: 1000 }),
-    tags: faker.helpers.arrayElements(['High Priority', 'VIP Customer', 'Frequent Returns'], 2),
-    lastContacted: lastContacted, // Use the determined lastContacted
-  };
-};
+    tags: faker.helpers.arrayElements(
+      ['High Priority', 'VIP Customer', 'Frequent Returns'],
+      2
+    ),
+    lastContacted: lastContacted // Use the determined lastContacted
+  }
+}
 
 // Endpoint to fetch customer details
 router.get('/api/customer-details', (req, res) => {
-  const { caseId } = req.query;
+  const { caseId } = req.query
 
   // Validate input
   if (!caseId) {
-    return res.status(400).json({ error: 'Please provide a caseId.' });
+    return res.status(400).json({ error: 'Please provide a caseId.' })
   }
 
   // Generate mock details dynamically
-  const customerDetails = generateMockDetails();
+  const customerDetails = generateMockDetails()
 
   // Add specific identifier to make it clear which query fetched the data
-  customerDetails.caseId = caseId;
+  customerDetails.caseId = caseId
 
   // Respond with the generated details
-  res.json(customerDetails);
-});
-
+  res.json(customerDetails)
+})
 
 const prepaidPlans = [
   { name: 'Hala Super Recharge 15', data: 1.5, voice: 60, price: 15 },
@@ -195,62 +197,67 @@ const prepaidPlans = [
   { name: 'Hala Super Recharge 65', data: 14.2, voice: 276, price: 65 },
   { name: 'Hala Super Recharge 100', data: 23.4, voice: 460, price: 100 },
   { name: 'Hala Super Recharge 125', data: 26.85, voice: 575, price: 125 },
-  { name: 'Hala Super Recharge 200', data: 41.8, voice: 1150, price: 200 },
-];
+  { name: 'Hala Super Recharge 200', data: 41.8, voice: 1150, price: 200 }
+]
 
 const postpaidPlans = [
   { name: 'Shahry+ Go', data: 15, voice: 500, price: 140 },
   { name: 'Shahry+ Super', data: 25, voice: Infinity, price: 200 },
-  { name: 'Shahry+ Social', data: 40, voice: Infinity, price: 250 },
-];
+  { name: 'Shahry+ Social', data: 40, voice: Infinity, price: 250 }
+]
 
 // Counter to toggle between data and voice for usage simulation
-let toggleCounter = 0;
+let toggleCounter = 0
 
 // Helper function to recommend the best postpaid plan
 const recommendPostpaidPlan = (dataUsage, voiceUsage) => {
   const suitablePlans = postpaidPlans.filter(
-    (plan) => plan.data >= dataUsage || plan.voice >= voiceUsage
-  );
+    plan => plan.data >= dataUsage || plan.voice >= voiceUsage
+  )
 
-  suitablePlans.sort((a, b) => a.price - b.price);
-  return suitablePlans[0];
-};
+  suitablePlans.sort((a, b) => a.price - b.price)
+  return suitablePlans[0]
+}
 
 // Endpoint to fetch customer details and recommend a postpaid plan
 router.get('/api/ooredoo/customer-details', (req, res) => {
-  const { mobileNumber } = req.query;
+  const { mobileNumber } = req.query
 
   // Validate input
   if (!mobileNumber) {
     return res
       .status(400)
-      .json({ error: 'Please provide a mobileNumber as a required parameter.' });
+      .json({ error: 'Please provide a mobileNumber as a required parameter.' })
   }
 
   // Select a random prepaid plan for the customer
-  const currentPlan = prepaidPlans[Math.floor(Math.random() * prepaidPlans.length)];
+  const currentPlan =
+    prepaidPlans[Math.floor(Math.random() * prepaidPlans.length)]
 
   // Simulate usage data
-  toggleCounter++;
+  toggleCounter++
 
   // Alternate the usage for data and voice for each request
-  let dataUsage, voiceUsage, highUsageReason;
+  let dataUsage, voiceUsage, highUsageReason
 
   if (toggleCounter % 2 === 0) {
     // Simulate data usage exceeding limits
-    dataUsage = faker.number.float({ min: currentPlan.data + 1, max: 50, fractionDigits: 1 });
-    voiceUsage = faker.number.int({ min: 0, max: currentPlan.voice }); // Keep voice usage within the plan
-    highUsageReason = 'Data usage exceeds current plan limits';
+    dataUsage = faker.number.float({
+      min: currentPlan.data + 1,
+      max: 50,
+      fractionDigits: 1
+    })
+    voiceUsage = faker.number.int({ min: 0, max: currentPlan.voice }) // Keep voice usage within the plan
+    highUsageReason = 'Data usage exceeds current plan limits'
   } else {
     // Simulate voice usage exceeding limits
-    voiceUsage = faker.number.int({ min: currentPlan.voice + 1, max: 1200 });
-    dataUsage = faker.number.float({ min: 0, max: currentPlan.data }); // Keep data usage within the plan
-    highUsageReason = 'Voice usage exceeds current plan limits';
+    voiceUsage = faker.number.int({ min: currentPlan.voice + 1, max: 1200 })
+    dataUsage = faker.number.float({ min: 0, max: currentPlan.data }) // Keep data usage within the plan
+    highUsageReason = 'Voice usage exceeds current plan limits'
   }
 
   // Recommend a postpaid plan
-  const recommendedPlan = recommendPostpaidPlan(dataUsage, voiceUsage);
+  const recommendedPlan = recommendPostpaidPlan(dataUsage, voiceUsage)
 
   // Response payload
   const response = {
@@ -261,224 +268,268 @@ router.get('/api/ooredoo/customer-details', (req, res) => {
       currentPlan: currentPlan.name,
       planDetails: {
         dataLimit: `${currentPlan.data} GB`,
-        voiceLimit: `${currentPlan.voice} minutes`,
+        voiceLimit: `${currentPlan.voice} minutes`
       },
       usageDetails: {
         dataUsage: `${dataUsage.toFixed(1)} GB`,
-        voiceUsage: `${voiceUsage} minutes`,
+        voiceUsage: `${voiceUsage} minutes`
       },
       highUsage: {
         data: dataUsage > currentPlan.data,
         voice: voiceUsage > currentPlan.voice,
-        reason: highUsageReason,
-      },
+        reason: highUsageReason
+      }
     },
     recommendation: {
       suggestedPlan: recommendedPlan.name,
       planDetails: {
         dataLimit: `${recommendedPlan.data} GB`,
-        voiceLimit: recommendedPlan.voice === Infinity ? 'Unlimited' : `${recommendedPlan.voice} minutes`,
-        price: `QR ${recommendedPlan.price}/month`,
-      },
-    },
-  };
+        voiceLimit:
+          recommendedPlan.voice === Infinity
+            ? 'Unlimited'
+            : `${recommendedPlan.voice} minutes`,
+        price: `QR ${recommendedPlan.price}/month`
+      }
+    }
+  }
 
-  res.json(response);
-});
+  res.json(response)
+})
 
 // Endpoint to fetch full account holder details
 router.get('/api/techm/customer/:mobileNumber', (req, res) => {
-  const { mobileNumber } = req.params;
+  const { mobileNumber } = req.params
 
   // Validate input
   if (!mobileNumber) {
-    return res.status(400).json({ error: 'Mobile number is required.' });
+    return res.status(400).json({ error: 'Mobile number is required.' })
   }
 
   try {
-
     // Generate mock details
     const customerDetails = {
       fullName: faker.person.fullName(),
       address: `${fakerEN_GB.location.buildingNumber()} ${fakerEN_GB.location.street()}, ${fakerEN_GB.location.city()}, ${fakerEN_GB.location.county()}, United Kingdom, ${fakerEN_GB.location.zipCode()}`,
       mobileNumber,
-      dateOfBirth: faker.date.birthdate({ min: 18, max: 80, mode: 'age' }).toISOString().split('T')[0], // Format: YYYY-MM-DD
+      dateOfBirth: faker.date
+        .birthdate({ min: 18, max: 80, mode: 'age' })
+        .toISOString()
+        .split('T')[0], // Format: YYYY-MM-DD
       lastBillingAmount: `$${faker.finance.amount(10, 500, 2)}`, // Random billing amount
-      lastPaymentMethod: faker.helpers.arrayElement(['Credit Card', 'Debit Card', 'Net Banking', 'EMI', 'Wallet']), // Random payment method
+      lastPaymentMethod: faker.helpers.arrayElement([
+        'Credit Card',
+        'Debit Card',
+        'Net Banking',
+        'EMI',
+        'Wallet'
+      ]) // Random payment method
+    }
 
-    };
-
-    res.json(customerDetails);
+    res.json(customerDetails)
   } catch (err) {
-    console.debug("🚀 ~ router.get ~ err:", err)
+    console.debug('🚀 ~ router.get ~ err:', err)
   }
-
-
-});
-
+})
 
 // Function to generate a mock flight
 
 // Function to generate a mock flight
-const generateFlight = (daysAhead, departure = null, arrival = null, enforceStatus = false) => {
+const generateFlight = (
+  daysAhead,
+  departure = null,
+  arrival = null,
+  enforceStatus = false
+) => {
   return {
     flightNumber: `NK${faker.number.int({ min: 100, max: 999 })}`,
-    departure: departure || `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
-    arrival: arrival || `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
+    departure:
+      departure ||
+      `${faker.location.city()}, ${faker.location.state({
+        abbreviated: true
+      })}`,
+    arrival:
+      arrival ||
+      `${faker.location.city()}, ${faker.location.state({
+        abbreviated: true
+      })}`,
     departureTime: faker.date.soon({ days: daysAhead }).toISOString(),
-    arrivalTime: faker.date.soon({ days: daysAhead, refDate: new Date(Date.now() + 2 * 60 * 60 * 1000) }).toISOString(),
+    arrivalTime: faker.date
+      .soon({
+        days: daysAhead,
+        refDate: new Date(Date.now() + 2 * 60 * 60 * 1000)
+      })
+      .toISOString(),
     status: enforceStatus
-      ? "Scheduled" // Ensures next flight is never delayed/canceled
-      : faker.helpers.arrayElement(["On Time", "Delayed", "Cancelled"]),
-    gate: `G${faker.number.int({ min: 1, max: 50 })}`,
-  };
-};
+      ? 'Scheduled' // Ensures next flight is never delayed/canceled
+      : faker.helpers.arrayElement(['On Time', 'Delayed', 'Cancelled']),
+    gate: `G${faker.number.int({ min: 1, max: 50 })}`
+  }
+}
 
 router.get('/api/spirit/flight/:mobileNumber', (req, res) => {
-  const { mobileNumber } = req.params;
+  const { mobileNumber } = req.params
 
   // Validate input
   if (!mobileNumber) {
-    return res.status(400).json({ error: 'Mobile number is required.' });
+    return res.status(400).json({ error: 'Mobile number is required.' })
   }
 
   try {
     // Generate current flight
-    const currentFlight = generateFlight(1);
+    const currentFlight = generateFlight(1)
 
     // Generate next flight with same departure & arrival, but a later date
-    let nextFlight = generateFlight(3, currentFlight.departure, currentFlight.arrival, true);
+    let nextFlight = generateFlight(
+      3,
+      currentFlight.departure,
+      currentFlight.arrival,
+      true
+    )
 
     // Override if status was assigned as "Delayed" or "Cancelled"
-    if (["Delayed", "Cancelled"].includes(nextFlight.status)) {
-      nextFlight.status = "Scheduled";
+    if (['Delayed', 'Cancelled'].includes(nextFlight.status)) {
+      nextFlight.status = 'Scheduled'
     }
 
-    const flightData = { currentFlight, nextFlight };
+    const flightData = { currentFlight, nextFlight }
 
-    res.json(flightData);
+    res.json(flightData)
   } catch (err) {
-    console.error(`🚀 ~ Error fetching flight details for ${mobileNumber}:`, err);
-    res.status(500).json({ error: 'Internal server error.' });
+    console.error(
+      `🚀 ~ Error fetching flight details for ${mobileNumber}:`,
+      err
+    )
+    res.status(500).json({ error: 'Internal server error.' })
   }
-});
-
+})
 
 const generateCIBILDetails = () => {
   return {
     cibilScore: faker.number.int({ min: 300, max: 900 }),
-    creditUtilization: faker.number.float({ min: 10, max: 90, precision: 0.1 }) + "%",
+    creditUtilization:
+      faker.number.float({ min: 10, max: 90, precision: 0.1 }) + '%',
     totalAccounts: faker.number.int({ min: 2, max: 15 }),
     activeLoans: faker.number.int({ min: 0, max: 5 }),
-    creditCardLimit: `$${faker.number.int({ min: 500, max: 10000 }).toLocaleString()}`,
-    lastPaymentDate: faker.date.recent({ days: 60 }).toISOString().split("T")[0],
+    creditCardLimit: `$${faker.number
+      .int({ min: 500, max: 10000 })
+      .toLocaleString()}`,
+    lastPaymentDate: faker.date
+      .recent({ days: 60 })
+      .toISOString()
+      .split('T')[0],
     missedPayments: faker.number.int({ min: 0, max: 5 }),
-    creditAge: faker.number.int({ min: 1, max: 20 }) + " years",
+    creditAge: faker.number.int({ min: 1, max: 20 }) + ' years',
     remarks: faker.helpers.arrayElement([
-      "Good repayment history",
-      "High credit utilization",
-      "Low credit age",
-      "No missed payments",
-      "Recent loan inquiries detected",
-    ]),
-  };
-};
+      'Good repayment history',
+      'High credit utilization',
+      'Low credit age',
+      'No missed payments',
+      'Recent loan inquiries detected'
+    ])
+  }
+}
 
-
-router.get("/api/cibil/soft-pull/:mobileNumber", (req, res) => {
-  const { mobileNumber } = req.params;
-
+router.get('/api/cibil/soft-pull/:mobileNumber', (req, res) => {
+  const { mobileNumber } = req.params
 
   res.json({
     mobileNumber,
-    inquiryType: "Soft Pull",
+    inquiryType: 'Soft Pull',
     fetchedAt: new Date().toISOString(),
-    ...generateCIBILDetails(),
-  });
-});
+    ...generateCIBILDetails()
+  })
+})
 
-
-
-const IPL_TEAMS = ["DC", "SRH", "RCB", "MI", "CSK", "KKR", "PBKS", "RR", "LSG", "GT"];
+const IPL_TEAMS = [
+  'DC',
+  'SRH',
+  'RCB',
+  'MI',
+  'CSK',
+  'KKR',
+  'PBKS',
+  'RR',
+  'LSG',
+  'GT'
+]
 
 // Function to generate deterministic fake data based on taskId
-const generateTaskStats = (taskId) => {
-  const seed = parseInt(taskId, 36) % 1000;
-  faker.seed(seed);
+const generateTaskStats = taskId => {
+  const seed = parseInt(taskId, 36) % 1000
+  faker.seed(seed)
 
-  const seriesCount = faker.number.int({ min: 10, max: 50 });
-  const totalMatches = faker.number.int({ min: 100, max: 500 });
-  const totalContests = faker.number.int({ min: 200, max: 1000 });
-  const winRate = faker.number.int({ min: 30, max: 70 });
+  const seriesCount = faker.number.int({ min: 10, max: 50 })
+  const totalMatches = faker.number.int({ min: 100, max: 500 })
+  const totalContests = faker.number.int({ min: 200, max: 1000 })
+  const winRate = faker.number.int({ min: 30, max: 70 })
 
-  const recentMatches = Array.from({ length: faker.number.int({ min: 5, max: 10 }) }, () => {
-    const team1 = faker.helpers.arrayElement(IPL_TEAMS);
-    let team2 = faker.helpers.arrayElement(IPL_TEAMS);
-    while (team1 === team2) team2 = faker.helpers.arrayElement(IPL_TEAMS);
+  const recentMatches = Array.from(
+    { length: faker.number.int({ min: 5, max: 10 }) },
+    () => {
+      const team1 = faker.helpers.arrayElement(IPL_TEAMS)
+      let team2 = faker.helpers.arrayElement(IPL_TEAMS)
+      while (team1 === team2) team2 = faker.helpers.arrayElement(IPL_TEAMS)
 
-    const isRuns = faker.datatype.boolean();
-    const margin = isRuns
-      ? `${faker.number.int({ min: 1, max: 100 })} runs`
-      : `${faker.number.int({ min: 1, max: 10 })} wickets`;
+      const isRuns = faker.datatype.boolean()
+      const margin = isRuns
+        ? `${faker.number.int({ min: 1, max: 100 })} runs`
+        : `${faker.number.int({ min: 1, max: 10 })} wickets`
 
-    const winner = faker.datatype.boolean() ? team1 : team2;
-    const loser = winner === team1 ? team2 : team1;
+      const winner = faker.datatype.boolean() ? team1 : team2
+      const loser = winner === team1 ? team2 : team1
 
-    return {
-      matchId: faker.string.uuid(),
-      team1,
-      team2,
-      winner,
-      loser,
-      margin,
-      date: faker.date.recent({ days: 30 }).toISOString(),
-      status: faker.datatype.boolean() ? "Completed" : "Pending",
-      pointsScored: faker.number.float({ min: 400, max: 800 }),
-      tournamentType: faker.helpers.arrayElement(["T1", "T10", "T20"]),
-      teamsCreated: faker.number.int({ min: 1, max: 5 }),
-      dreamTeamScore: faker.number.float({ min: 500, max: 1300 }),
-      winnings: {
-        amount: faker.number.int({ min: 0, max: 5000 }),
-        creditType: faker.helpers.arrayElement(["FPV", "Direct"]),
-      },
-      joined: faker.datatype.boolean(),
-      won: faker.datatype.boolean(),
-    };
-  });
+      return {
+        matchId: faker.string.uuid(),
+        team1,
+        team2,
+        winner,
+        loser,
+        margin,
+        date: faker.date.recent({ days: 30 }).toISOString(),
+        status: faker.datatype.boolean() ? 'Completed' : 'Pending',
+        pointsScored: faker.number.float({ min: 400, max: 800 }),
+        tournamentType: faker.helpers.arrayElement(['T1', 'T10', 'T20']),
+        teamsCreated: faker.number.int({ min: 1, max: 5 }),
+        dreamTeamScore: faker.number.float({ min: 500, max: 1300 }),
+        winnings: {
+          amount: faker.number.int({ min: 0, max: 5000 }),
+          creditType: faker.helpers.arrayElement(['FPV', 'Direct'])
+        },
+        joined: faker.datatype.boolean(),
+        won: faker.datatype.boolean()
+      }
+    }
+  )
 
   return {
     seriesCount,
     totalMatches,
     totalContests,
     winRate,
-    recentMatches,
-  };
+    recentMatches
+  }
 }
 
 router.get('/api/fantasy-stats/:taskId', (req, res) => {
-  const { taskId } = req.params;
+  const { taskId } = req.params
   if (!taskId) {
-    return res.status(400).json({ error: "Task ID is required" });
+    return res.status(400).json({ error: 'Task ID is required' })
   }
 
-  const stats = generateTaskStats(taskId);
-  res.json(stats);
-});
+  const stats = generateTaskStats(taskId)
+  res.json(stats)
+})
 
+const getSignalQuality = rsrp => {
+  if (rsrp >= -104) return 'Good'
+  if (rsrp >= -110) return 'Moderate'
+  return 'Poor'
+}
+const generateBroadbandStatus = customerId => {
+  const seed = parseInt(customerId, 36) % 1000
+  faker.seed(seed)
 
-
-const getSignalQuality = (rsrp) => {
-
-
-  if (rsrp >= -104) return "Good";
-  if (rsrp >= -110) return "Moderate";
-  return "Poor";
-};
-const generateBroadbandStatus = (customerId) => {
-  const seed = parseInt(customerId, 36) % 1000;
-  faker.seed(seed);
-
-  const rsrp = faker.number.float({ min: -120, max: -95, fractionDigits: 1 });
+  const rsrp = faker.number.float({ min: -120, max: -95, fractionDigits: 1 })
 
   const indianLocations = [
     { city: 'Mumbai', state: 'Maharashtra' },
@@ -491,58 +542,79 @@ const generateBroadbandStatus = (customerId) => {
     { city: 'Chandigarh', state: 'Punjab' },
     { city: 'Jaipur', state: 'Rajasthan' },
     { city: 'Kochi', state: 'Kerala' },
-    { city: 'Hyderabad', state: 'Telangana' },
-  ];
+    { city: 'Hyderabad', state: 'Telangana' }
+  ]
 
-  const loc = indianLocations[Math.floor(Math.random() * indianLocations.length)];
+  const loc =
+    indianLocations[Math.floor(Math.random() * indianLocations.length)]
 
-  const isSpecialCustomer = customerId === "12345" || "1234";
+  const isSpecialCustomer = customerId === '12345' || '1234'
 
   return {
     customerId,
     customerDetails: {
       name: fakerEN_IN.name.fullName(),
-      mobileNumber: fakerEN_IN.phone.number("+91-9#######00"),
-      address: `${faker.number.int({ min: 1, max: 999 })}, ${faker.location.street()}, ${loc.city}, ${loc.state}, India`
+      mobileNumber: fakerEN_IN.phone.number('+91-9#######00'),
+      address: `${faker.number.int({
+        min: 1,
+        max: 999
+      })}, ${faker.location.street()}, ${loc.city}, ${loc.state}, India`
     },
-    connectionStatus: isSpecialCustomer ? "Active" : faker.helpers.arrayElement(["Active", "Inactive"]),
-    connectionType: isSpecialCustomer ? "Postpaid" : faker.helpers.arrayElement(["Prepaid", "Postpaid"]),
-    ocsStatus: isSpecialCustomer ? "Active" : faker.helpers.arrayElement(["Active", "Not Active"]),
+    connectionStatus: isSpecialCustomer
+      ? 'Active'
+      : faker.helpers.arrayElement(['Active', 'Inactive']),
+    connectionType: isSpecialCustomer
+      ? 'Postpaid'
+      : faker.helpers.arrayElement(['Prepaid', 'Postpaid']),
+    ocsStatus: isSpecialCustomer
+      ? 'Active'
+      : faker.helpers.arrayElement(['Active', 'Not Active']),
     signalInfo: {
       rsrpLevel: rsrp,
       signalQuality: getSignalQuality(rsrp)
     },
     deviceInfo: {
-      deviceModel: faker.helpers.arrayElement(["Zyxel VMG3925", "Huawei HG8145V5", "Nokia G-240W-C"]),
-      firmwareVersion: "v" + faker.system.semver(),
+      deviceModel: faker.helpers.arrayElement([
+        'Zyxel VMG3925',
+        'Huawei HG8145V5',
+        'Nokia G-240W-C'
+      ]),
+      firmwareVersion: 'v' + faker.system.semver(),
       lastOnline: faker.date.recent({ days: 2 }).toISOString()
     },
     networkInfo: {
       cellId: faker.string.alphanumeric(8),
-      frequencyBand: faker.helpers.arrayElement(["1800 MHz", "2300 MHz", "700 MHz"]),
+      frequencyBand: faker.helpers.arrayElement([
+        '1800 MHz',
+        '2300 MHz',
+        '700 MHz'
+      ]),
       lastReboot: faker.date.recent({ days: 5 }).toISOString(),
-      currentSpeedMbps: faker.number.float({ min: 5, max: 100, fractionDigits: 1 })
+      currentSpeedMbps: faker.number.float({
+        min: 5,
+        max: 100,
+        fractionDigits: 1
+      })
     }
-  };
-};
-
+  }
+}
 
 router.get('/api/broadband/signal-status/:customerId', (req, res) => {
-  const { customerId } = req.params;
+  const { customerId } = req.params
   if (!customerId) {
-    return res.status(400).json({ error: "Customer ID is required" });
+    return res.status(400).json({ error: 'Customer ID is required' })
   }
 
-  const data = generateBroadbandStatus(customerId);
-  res.json(data);
-});
+  const data = generateBroadbandStatus(customerId)
+  res.json(data)
+})
 
 // Endpoint to fetch order status for food available in India
 router.get('/api/exotel/order-status/:orderId', (req, res) => {
-  const { orderId } = req.params;
+  const { orderId } = req.params
 
   if (!orderId) {
-    return res.status(400).json({ error: 'Order ID is required.' });
+    return res.status(400).json({ error: 'Order ID is required.' })
   }
 
   try {
@@ -567,24 +639,33 @@ router.get('/api/exotel/order-status/:orderId', (req, res) => {
       'Red Velvet Cupcake',
       'Thick Oreo Shake',
       'Pasta Alfredo with Garlic Bread'
-    ];
+    ]
 
-    const items = Array.from({ length: faker.number.int({ min: 1, max: 4 }) }, () => {
-      const name = faker.helpers.arrayElement(trendingIndiaFoods);
-      return {
-        name,
-        quantity: faker.number.int({ min: 1, max: 3 }),
-        price: `₹${faker.finance.amount(80, 450, 0)}`
-      };
-    });
+    const items = Array.from(
+      { length: faker.number.int({ min: 1, max: 4 }) },
+      () => {
+        const name = faker.helpers.arrayElement(trendingIndiaFoods)
+        return {
+          name,
+          quantity: faker.number.int({ min: 1, max: 3 }),
+          price: `₹${faker.finance.amount(80, 450, 0)}`
+        }
+      }
+    )
 
     const totalAmount = items.reduce((sum, item) => {
-      return sum + parseInt(item.price.replace('₹', ''), 10) * item.quantity;
-    }, 0);
+      return sum + parseInt(item.price.replace('₹', ''), 10) * item.quantity
+    }, 0)
 
     const orderStatus = {
       orderId,
-      status: faker.helpers.arrayElement(['Placed', 'Preparing', 'Out for Delivery', 'Delivered', 'Cancelled']),
+      status: faker.helpers.arrayElement([
+        'Placed',
+        'Preparing',
+        'Out for Delivery',
+        'Delivered',
+        'Cancelled'
+      ]),
       restaurantName: faker.helpers.arrayElement([
         'Burger Singh',
         'Domino’s',
@@ -601,30 +682,31 @@ router.get('/api/exotel/order-status/:orderId', (req, res) => {
       totalAmount: `₹${totalAmount}`,
       estimatedDeliveryTime: faker.date.soon({ days: 1 }).toISOString(),
       deliveryAddress: `${faker.location.streetAddress()}, ${faker.location.city()}, India`
-    };
+    }
 
-    res.json(orderStatus);
+    res.json(orderStatus)
   } catch (err) {
-    console.error("🚨 Error fetching order status:", err);
-    res.status(500).json({ error: 'Failed to fetch order status.' });
+    console.error('🚨 Error fetching order status:', err)
+    res.status(500).json({ error: 'Failed to fetch order status.' })
   }
-});
-
+})
 
 // Endpoint to issue a voucher to customer account
 router.post('/api/exotel/issue-voucher', (req, res) => {
-  const { mobileNumber, fullName } = req.body;
+  const { mobileNumber, fullName } = req.body
 
   if (!mobileNumber || !fullName) {
-    return res.status(400).json({ error: 'Full name and mobile number are required.' });
+    return res
+      .status(400)
+      .json({ error: 'Full name and mobile number are required.' })
   }
 
   try {
-    const voucherCode = `EXO-${faker.string.alphanumeric(6).toUpperCase()}`;
-    const voucherAmount = `₹${faker.finance.amount(500, 2500, 0)}`;
-    const expiryDate = faker.date.soon({ days: 30 }).toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    const voucherCode = `EXO-${faker.string.alphanumeric(6).toUpperCase()}`
+    const voucherAmount = `₹${faker.finance.amount(500, 2500, 0)}`
+    const expiryDate = faker.date.soon({ days: 30 }).toISOString().split('T')[0] // Format: YYYY-MM-DD
 
-    const message = `🎉 Voucher issued successfully! Code "${voucherCode}" worth ${voucherAmount} has been added to user's account. Valid till ${expiryDate}.`;
+    const message = `🎉 Voucher issued successfully! Code "${voucherCode}" worth ${voucherAmount} has been added to user's account. Valid till ${expiryDate}.`
 
     res.json({
       message,
@@ -635,132 +717,179 @@ router.post('/api/exotel/issue-voucher', (req, res) => {
         issuedAt: new Date().toISOString(),
         validTill: expiryDate
       }
-    });
+    })
   } catch (err) {
-    console.error("🚨 Error issuing voucher:", err);
-    res.status(500).json({ error: 'Failed to issue voucher.' });
+    console.error('🚨 Error issuing voucher:', err)
+    res.status(500).json({ error: 'Failed to issue voucher.' })
   }
-});
+})
 
-
-router.get("/api/internet/:id", (req, res) => {
+router.get('/api/internet/:id', (req, res) => {
   const id = req.params.id // ensure it's a number
 
-  let data = munish;
+  let data = munish
 
   if (id === '1234567890') {
-    data = amit;
+    data = amit
   } else if (id === '0987654321') {
-    data = robin;
+    data = robin
   }
   data.mobileNumber = id
 
-  res.json(data);
-});
+  res.json(data)
+})
 
-
-
-
-
-
-const generateCustomerInfo = (identifier) => {
-  const seed = parseInt(identifier.replace(/\D/g, ""), 10) || 999;
-  faker.seed(seed);
+const generateCustomerInfo = identifier => {
+  const seed = parseInt(identifier.replace(/\D/g, ''), 10) || 999
+  faker.seed(seed)
 
   // Known, real US cities with state + ZIP patterns
   const cityData = [
-    { city: "Los Angeles", state: "California", zipPrefix: "90" },
-    { city: "Dallas", state: "Texas", zipPrefix: "75" },
-    { city: "Chicago", state: "Illinois", zipPrefix: "60" },
-    { city: "Miami", state: "Florida", zipPrefix: "33" },
-    { city: "New York", state: "New York", zipPrefix: "10" },
-  ];
-  const selected = faker.helpers.arrayElement(cityData);
+    { city: 'Los Angeles', state: 'California', zipPrefix: '90' },
+    { city: 'Dallas', state: 'Texas', zipPrefix: '75' },
+    { city: 'Chicago', state: 'Illinois', zipPrefix: '60' },
+    { city: 'Miami', state: 'Florida', zipPrefix: '33' },
+    { city: 'New York', state: 'New York', zipPrefix: '10' }
+  ]
+  const selected = faker.helpers.arrayElement(cityData)
 
   return {
     name: faker.person.fullName(),
-    address: `${faker.location.streetAddress()}, ${selected.city}, ${selected.state} ${selected.zipPrefix}${faker.number.int({ min: 100, max: 999 })}`,
-    accountStatus: faker.helpers.arrayElement(["Active", "Inactive", "Suspended"]),
-    services: faker.helpers.arrayElements(["Internet", "Phone", "TV"], { min: 1, max: 3 }),
-    devices: faker.helpers.arrayElements(["T-Mobile Gateway", "SIM Card", "Set-top box", "Router"], { min: 1, max: 3 }),
-    notes: faker.helpers.arrayElement([
-      "Customer recently upgraded their plan.",
-      "Reported signal issues last week.",
-      "No contact in the last 30 days.",
-      "Scheduled for a service visit.",
-      "Has an active support ticket pending resolution."
+    address: `${faker.location.streetAddress()}, ${selected.city}, ${
+      selected.state
+    } ${selected.zipPrefix}${faker.number.int({ min: 100, max: 999 })}`,
+    accountStatus: faker.helpers.arrayElement([
+      'Active',
+      'Inactive',
+      'Suspended'
     ]),
-  };
-};
+    services: faker.helpers.arrayElements(['Internet', 'Phone', 'TV'], {
+      min: 1,
+      max: 3
+    }),
+    devices: faker.helpers.arrayElements(
+      ['T-Mobile Gateway', 'SIM Card', 'Set-top box', 'Router'],
+      { min: 1, max: 3 }
+    ),
+    notes: faker.helpers.arrayElement([
+      'Customer recently upgraded their plan.',
+      'Reported signal issues last week.',
+      'No contact in the last 30 days.',
+      'Scheduled for a service visit.',
+      'Has an active support ticket pending resolution.'
+    ])
+  }
+}
 
+router.get('/api/customer/:identifier', (req, res) => {
+  const { identifier } = req.params
+  const data = generateCustomerInfo(identifier)
+  res.json(data)
+})
 
-router.get("/api/customer/:identifier", (req, res) => {
-  const { identifier } = req.params;
-  const data = generateCustomerInfo(identifier);
-  res.json(data);
-});
+const simulateRestart = accountNumber => {
+  const seed = parseInt(accountNumber.replace(/\D/g, ''), 10) || 500
+  faker.seed(seed)
 
-const simulateRestart = (accountNumber) => {
-  const seed = parseInt(accountNumber.replace(/\D/g, ""), 10) || 500;
-  faker.seed(seed);
-
-  const rebootStatus = faker.helpers.arrayElement(["In Progress", "Completed"]);
-  const eta = faker.date.soon({ days: 0.01 }); // in a few minutes
+  const rebootStatus = faker.helpers.arrayElement(['In Progress', 'Completed'])
+  const eta = faker.date.soon({ days: 0.01 }) // in a few minutes
 
   return {
     status: rebootStatus,
     estimatedSLA: `${faker.number.int({ min: 1, max: 5 })} minutes`,
     startedAt: new Date().toISOString(),
     expectedCompletion: eta.toISOString(),
-    message: rebootStatus === "Failed" ? "System timeout. Please try again." : "Restart request acknowledged.",
-  };
-};
+    message:
+      rebootStatus === 'Failed'
+        ? 'System timeout. Please try again.'
+        : 'Restart request acknowledged.'
+  }
+}
 
+const generateRecentCases = identifier => {
+  const seed = parseInt(identifier.replace(/\D/g, ''), 10) || 1000
+  faker.seed(seed)
 
+  const callerName = faker.person.fullName() // Same name for all cases
 
-const generateRecentCases = (identifier) => {
-  const seed = parseInt(identifier.replace(/\D/g, ""), 10) || 1000;
-  faker.seed(seed);
-
-  const callerName = faker.person.fullName(); // Same name for all cases
-
-  const cases = Array.from({ length: faker.number.int({ min: 3, max: 5 }) }, () => ({
-    caseId: `SR-${faker.string.alphanumeric(6).toUpperCase()}`,
-    issueDate: faker.date.recent({ days: 30 }),
-    description: faker.lorem.sentence(),
-    troubleshootingSteps: faker.lorem.sentences(2),
-    resolution: faker.helpers.arrayElement(["Pending", "In Progress", "Resolved"]),
-    callerName,
-  }));
+  const cases = Array.from(
+    { length: faker.number.int({ min: 3, max: 5 }) },
+    () => ({
+      caseId: `SR-${faker.string.alphanumeric(6).toUpperCase()}`,
+      issueDate: faker.date.recent({ days: 30 }),
+      description: faker.lorem.sentence(),
+      troubleshootingSteps: faker.lorem.sentences(2),
+      resolution: faker.helpers.arrayElement([
+        'Pending',
+        'In Progress',
+        'Resolved'
+      ]),
+      callerName
+    })
+  )
 
   return cases
     .sort((a, b) => b.issueDate.getTime() - a.issueDate.getTime()) // Descending
-    .map((item) => ({
+    .map(item => ({
       ...item,
-      issueDate: item.issueDate.toISOString().split("T")[0], // Format date
-    }));
-};
+      issueDate: item.issueDate.toISOString().split('T')[0] // Format date
+    }))
+}
 
+router.get('/api/customer/:identifier/recent-cases', (req, res) => {
+  const { identifier } = req.params
+  const cases = generateRecentCases(identifier)
+  res.json(cases)
+})
 
-router.get("/api/customer/:identifier/recent-cases", (req, res) => {
-  const { identifier } = req.params;
-  const cases = generateRecentCases(identifier);
-  res.json(cases);
-});
+router.get('/api/system-central/restart/:accountNumber', (req, res) => {
+  const { accountNumber } = req.params
+  const result = simulateRestart(accountNumber)
+  res.json(result)
+})
 
+router.get('/api/policy/:identifier', (req, res) => {
+  const faker = fakerEN_IN
 
-router.get("/api/system-central/restart/:accountNumber", (req, res) => {
-  const { accountNumber } = req.params;
-  const result = simulateRestart(accountNumber);
-  res.json(result);
-});
+  const { identifier } = req.params
+  const seed = parseInt(identifier.replace(/\D/g, ''), 10) || 1234
+  faker.seed(seed)
 
+  const suspicious = faker.datatype.boolean()
 
+  const response = {
+    policyNumber: identifier, // <-- as received (could be mobile or policy number),
+    mobileNumber: faker.phone.number('+91-9#########'),
+    policyStatus: faker.helpers.arrayElement(['Active', 'Terminated']),
+    isSuspicious: suspicious,
+    suspiciousNotes: suspicious
+      ? faker.helpers.arrayElement([
+          'Unusual high-frequency claims',
+          'Recent change in nominee before claim',
+          'Mismatch in hospitalization records'
+        ])
+      : null,
+    claimsThisYear: faker.number.int({ min: 0, max: 4 }),
+    lastClaim: {
+      date: faker.date.recent({ days: 180 }).toISOString().split('T')[0],
+      nature: faker.helpers.arrayElement([
+        'Hospitalization',
+        'Car Accident',
+        'Mobile Theft',
+        'Critical Illness',
+        'Natural Disaster Damage'
+      ])
+    },
+    sumInsured: 200000,
+    amountUsed: faker.number.int({ min: 0, max: 200000 })
+  }
+
+  res.json(response)
+})
 
 // Serve the index.html file for the root route
 router.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../views/index.html'));
-});
+  res.sendFile(path.join(__dirname, '../views/index.html'))
+})
 
-
-module.exports = router;
+module.exports = router
