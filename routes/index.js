@@ -860,7 +860,7 @@ router.get('/api/policy/:identifier', (req, res) => {
   const response = {
     policyNumber: identifier, // <-- as received (could be mobile or policy number),
     mobileNumber: faker.phone.number('+91-9#########'),
-    policyStatus: faker.helpers.arrayElement(['Active', 'Terminated']),
+    policyStatus: faker.helpers.arrayElement(['Active']),
     isSuspicious: suspicious,
     suspiciousNotes: suspicious
       ? faker.helpers.arrayElement([
