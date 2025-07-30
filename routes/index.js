@@ -2,6 +2,87 @@ const express = require('express')
 const { faker, fakerEN_GB, fakerEN_IN } = require('@faker-js/faker')
 const path = require('path')
 const router = express.Router()
+const billing = {
+  priya: {
+    customerDetails: {
+      name: 'Priya Sharma',
+      company: 'Data Systems',
+      location: 'Bangalore',
+      phoneNumber: '9876543210',
+      email: 'priya.sharma@datasystems.com'
+    },
+    currentBillDetails: {
+      billNumber: '789012AB56',
+      billAmount: 1800,
+      billDate: '2025-08-15',
+      billPeriod: {
+        start: '2025-07-16',
+        end: '2025-08-15'
+      },
+      creditLimit: 3000,
+      lastBillPaid: 1950,
+      billPaidOn: '2025-07-20'
+    },
+    extraServiceCharges: {
+      helloTune: 50,
+      callForwarding: 75,
+      vasService: 200
+    }
+  },
+  amit: {
+    customerDetails: {
+      name: 'Amit Patel',
+      company: 'Green Solutions',
+      location: 'Mumbai',
+      phoneNumber: '8765432109',
+      email: 'amit.patel@greensolutions.in'
+    },
+    currentBillDetails: {
+      billNumber: '345678CD90',
+      billAmount: 3200,
+      billDate: '2025-07-05',
+      billPeriod: {
+        start: '2025-04-06',
+        end: '2025-08-05'
+      },
+      creditLimit: 5000,
+      lastBillPaid: 2800,
+      billPaidOn: '2025-07-10'
+    },
+    extraServiceCharges: {
+      helloTune: 0,
+      callForwarding: 0,
+      vasService: 0
+    }
+  },
+
+  sneha: {
+    customerDetails: {
+      name: 'Sneha Reddy',
+      company: 'Tech Innovators',
+      location: 'Hyderabad',
+      phoneNumber: '7654321098',
+      email: 'sneha.reddy@techinnovators.com'
+    },
+    currentBillDetails: {
+      billNumber: '901234EF78',
+      billAmount: 2100,
+      billDate: '2025-10-20',
+      billPeriod: {
+        start: '2025-06-21',
+        end: '2025-09-20'
+      },
+      creditLimit: 4000,
+      lastBillPaid: 2300,
+      billPaidOn: '2025-07-21'
+    },
+    extraServiceCharges: {
+      helloTune: 75,
+      callForwarding: 90,
+      vasService: 280
+    }
+  }
+}
 
 const robin = {
   status: 'Authenticated',
@@ -885,6 +966,20 @@ router.get('/api/policy/:identifier', (req, res) => {
   }
 
   res.json(response)
+})
+
+router.get('/api/mobile/billing/:number', (req, res) => {
+  const { number } = req.params
+
+  let data = billing.priya
+
+  if (number === '1234567890') {
+    data = billing.amit
+  } else if (number === '0987654321') {
+    data = billing.sneha
+  }
+  data.customerDetails.phoneNumber = number
+  res.json(data)
 })
 
 // Serve the index.html file for the root route
